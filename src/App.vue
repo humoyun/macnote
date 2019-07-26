@@ -1,28 +1,32 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <mac-note></mac-note>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MacNote from '@/app/MacNote.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    MacNote
   }
 }
 </script>
 
 <style>
+html, body {
+  margin: 0;
+}
+
 #app {
+  width: 100%;
+  height: 100%;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
