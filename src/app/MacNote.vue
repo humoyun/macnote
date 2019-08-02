@@ -15,9 +15,6 @@
 </template>
 
 <script>
-import Modal from '../components/Modal.vue';
-import McButton from '../components/Button.vue'
-
 export default {
   data() {
     return {
@@ -26,8 +23,6 @@ export default {
   },
 
   components: {
-    Modal,
-    McButton
   },
 
   methods: {
