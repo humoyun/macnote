@@ -39,9 +39,10 @@ export default {
   width: 100%;
   height: 100vh;
   background-color: rgb(5, 120, 133);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+
   flex-direction: column;
 
   .mc-header {
