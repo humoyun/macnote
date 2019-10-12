@@ -1,61 +1,72 @@
 <template>
   <div id="mc-login-page">
-    <div class="form-container sign-up-container">
-      <form action="#">
-        <h1>Create Account</h1>
-        <div class="social-container">
-          <a href="#" class="social">
-            <i class="fab facebook-f"></i>
-          </a>
-          <a href="#" class="social">
-            <i class="fab facebook-f"></i>
-          </a>
-          <a href="#" class="social">
-            <i class="fab facebook-f"></i>
-          </a>
-        </div>
-        <span>or use your email for registration</span>
-        <input type="text" name="username" placeholder="Name..." />
-        <input type="email" name="email" placeholder="Email..." />
-        <input type="password" name="password" placeholder="Password..." />
-        <button>Sign Up</button>
-      </form>
-    </div>
+    <div class="container" :class="{ 'right-panel-active': rightPanelActive }">
+      <div class="form-container sign-up-container">
+        <form action="#">
+          <h1>Create Account</h1>
+          <div class="social-container">
+            <a href="#" class="social">
+              <i class="fab facebook-f"></i>
+            </a>
+            <a href="#" class="social">
+              <i class="fab facebook-f"></i>
+            </a>
+            <a href="#" class="social">
+              <i class="fab facebook-f"></i>
+            </a>
+          </div>
+          <span>or use your email for registration</span>
+          <input type="text" name="username" placeholder="Name..." />
+          <input type="email" name="email" placeholder="Email..." />
+          <input type="password" name="password" placeholder="Password..." />
+          <button>Sign Up</button>
+        </form>
+      </div>
 
-    <div class="form-container sign-in-container">
-      <form action="#">
-        <h1>Sign In</h1>
-        <div class="social-container">
-          <a href="#" class="social">
-            <i class="fab facebook-f"></i>
-          </a>
-          <a href="#" class="social">
-            <i class="fab facebook-f"></i>
-          </a>
-          <a href="#" class="social">
-            <i class="fab facebook-f"></i>
-          </a>
-        </div>
-        <span>or use your account</span>
-        <input type="text" name="username" placeholder="Name..." />
-        <input type="email" name="email" placeholder="Email..." />
-        <input type="password" name="password" placeholder="Password..." />
-        <a href="#">Forgot your password</a>
-        <button>Sign In</button>
-      </form>
-    </div>
+      <div class="form-container sign-in-container">
+        <form action="#">
+          <h1>Sign In</h1>
+          <div class="social-container">
+            <svg-icon icon-class="facebook" />
 
-    <div class="overlay-container">
-      <div class="overlay">
-        <div class="overlay-panel overlay-left">
-          <h1>Welcome Back!</h1>
-          <p>To keep connected with us please login with your personal info</p>
-          <button class="ghost" id="signIn">Sign In</button>
-        </div>
-        <div class="overlay-panel overlay-right">
-          <h1>Hello, Friend!</h1>
-          <p>Enter your personal details and start journey with us</p>
-          <button class="ghost" id="signUp">Sign Up</button>
+            <a href="#" class="social">
+              <i class="fab facebook-f"></i>
+            </a>
+            <a href="#" class="social">
+              <i class="fab facebook-f"></i>
+            </a>
+            <a href="#" class="social">
+              <i class="fab facebook-f"></i>
+            </a>
+          </div>
+          <span>or use your account</span>
+          <input type="email" name="email" placeholder="Email..." />
+          <input type="password" name="password" placeholder="Password..." />
+          <a href="#">Forgot your password</a>
+          <button>Sign In</button>
+        </form>
+      </div>
+
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <h1>Welcome Back!</h1>
+            <p>To keep connected with us please login with your personal info</p>
+            <button
+              class="ghost"
+              id="signIn"
+              @click="displayForm('sign-in')"
+            >Sign In</button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <h1>Macnote</h1>
+            <p>Enter your personal details and start journey with us</p>
+            <button
+              class="ghost"
+              id="signUp"
+              @click="displayForm('sign-up')"
+            >Sign Up</button>
+          </div>
         </div>
       </div>
     </div>
@@ -66,7 +77,19 @@
 export default {
   data() {
     return {
+      rightPanelActive: false
+    }
+  },
 
+  methods: {
+    displayForm(arg) {
+      if (arg==='sign-in') {
+        console.log('sign-in')
+        this.rightPanelActive = false;
+      } else {
+        console.log('sign-out')
+        this.rightPanelActive = true;
+      }
     }
   }
 }
@@ -122,8 +145,8 @@ export default {
 
   button {
     border-radius: 20px;
-    border: 1px solid $base-color;
-    background-color: $base-color;
+    border: 1px solid lighten($base-color, 15%);
+    background-color: lighten($base-color, 15%);
     color: #FFFFFF;
     font-size: 12px;
     font-weight: bold;
@@ -131,6 +154,7 @@ export default {
     letter-spacing: 1px;
     text-transform: uppercase;
     transition: transform 80ms ease-in;
+    cursor: pointer;
   }
 
   button:active {
@@ -141,9 +165,11 @@ export default {
     outline: none;
   }
 
-  button.ghost {
-    background-color: transparent;
-    border-color: #FFFFFF;
+  button {
+    .ghost {
+      background-color: transparent;
+      border-color: #FFFFFF;
+    }
   }
 
   form {
@@ -163,19 +189,20 @@ export default {
     padding: 12px 15px;
     margin: 8px 0;
     width: 100%;
+    outline: none;
   }
 
-  .container {
-    background-color: #fff;
-    border-radius: 10px;
-      box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
-        0 10px 10px rgba(0,0,0,0.22);
-    position: relative;
-    overflow: hidden;
-    width: 768px;
-    max-width: 100%;
-    min-height: 480px;
-  }
+  // .container {
+  //   background-color: #fff;
+  //   border-radius: 10px;
+  //     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
+  //       0 10px 10px rgba(0,0,0,0.22);
+  //   position: relative;
+  //   overflow: hidden;
+  //   width: 768px;
+  //   max-width: 100%;
+  //   min-height: 480px;
+  // }
 
   .form-container {
     position: absolute;
@@ -236,9 +263,9 @@ export default {
   }
 
   .overlay {
-    background: lighten( $base-color, 10% );
-    background: -webkit-linear-gradient(to right, $base-color, lighten( $base-color, 10% ));
-    background: linear-gradient(to right, $base-color, lighten( $base-color, 10% ));
+    background: lighten( $base-color, 15% );
+    background: -webkit-linear-gradient(to right, $base-color, lighten( $base-color, 15% ));
+    background: linear-gradient(to right, $base-color, lighten( $base-color, 15% ));
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0 0;
@@ -300,31 +327,6 @@ export default {
     margin: 0 5px;
     height: 40px;
     width: 40px;
-  }
-
-  footer {
-      background-color: #222;
-      color: #fff;
-      font-size: 14px;
-      bottom: 0;
-      position: fixed;
-      left: 0;
-      right: 0;
-      text-align: center;
-      z-index: 999;
-  }
-
-  footer p {
-      margin: 10px 0;
-  }
-
-  footer i {
-      color: red;
-  }
-
-  footer a {
-      color: #3c97bf;
-      text-decoration: none;
   }
 }
 </style>

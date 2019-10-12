@@ -24,3 +24,9 @@ npm run test
 ```
 npm run lint
 ```
+
+## Firebase related commands
+
+### Deploy
+
+
