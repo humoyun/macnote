@@ -16,9 +16,24 @@
             </a>
           </div>
           <span>or use your email for registration</span>
-          <input type="text" name="username" placeholder="Name..." />
-          <input type="email" name="email" placeholder="Email..." />
-          <input type="password" name="password" placeholder="Password..." />
+          <input
+            v-model="username"
+            type="text"
+            name="username"
+            placeholder="Name..."
+          />
+          <input
+            v-model="email"
+            type="email"
+            name="email"
+            placeholder="Email..."
+          />
+          <input
+            v-model="password"
+            type="password"
+            name="password"
+            placeholder="Password..."
+          />
           <button @click="register()">Sign Up</button>
         </div>
       </div>
@@ -40,8 +55,18 @@
             </a>
           </div>
           <span>or use your account</span>
-          <input type="email" name="email" placeholder="Email..." />
-          <input type="password" name="password" placeholder="Password..." />
+          <input
+            v-model="email"
+            type="email"
+            name="email"
+            placeholder="Email..."
+          />
+          <input
+            v-model="password"
+            type="password"
+            name="password"
+            placeholder="Password..."
+          />
           <a href="#">Forgot your password</a>
           <button @click="login()">Sign In</button>
         </div>
@@ -74,11 +99,24 @@
 </template>
 
 <script>
+import Firebase from '@/models/Firebase.js';
+
 export default {
   data() {
     return {
-      rightPanelActive: false
+      rightPanelActive: false,
+      email: '',
+      username: '',
+      password: '',
+      firebase: null
     }
+  },
+
+  created() {
+    console.log('******* Login ********')
+    this.firebase = new Firebase();
+    window.myfirebase = this.firebase;
+    console.log('Firebase: ', this.firebase)
   },
 
   methods: {
@@ -88,6 +126,7 @@ export default {
 
     register() {
       console.log('register');
+      this.firebase.createUser(this.email, this.password);
     },
     
     displayForm(arg) {

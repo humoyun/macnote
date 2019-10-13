@@ -39,7 +39,7 @@ export default {
   @include flex-centered;
   width: 100%;
   height: 100%;
-  background-color: $base-color;
+  background-color: lighten($base-color, 10%); 
   // display: flex;
   // align-items: center;
   // justify-content: center;
