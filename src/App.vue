@@ -1,20 +1,14 @@
 <template>
   <div id="app">
-    <!-- <mac-note></mac-note> -->
-    <login></login>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import MacNote from '@/app/MacNote.vue'
-import Login from '@/app/Login.vue'
+
 
 export default {
-  name: 'app',
-  components: {
-    MacNote,
-    Login
-  }
+  name: 'app'
 }
 </script>
 

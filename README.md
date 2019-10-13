@@ -27,6 +27,12 @@ npm run lint
 
 ## Firebase related commands
 
+### Serve with firebase locally
+```
+firebase serve
+```
 ### Deploy
-
+```
+firebase deploy
+```
 
