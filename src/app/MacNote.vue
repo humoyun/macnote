@@ -5,9 +5,9 @@
       <span>Currently under development</span>
     </div>
     <div class="mc-container">
-      <div class="mc-app-header"></div>
       <div class="mc-app-body">
-        <div class="mc-body-folders"></div>
+        <div></div>
+        <folders class="mc-body-folders"></folders>
         <div class="mc-body-notes"></div>
         <div class="mc-body-content"></div>
       </div>
@@ -16,14 +16,27 @@
 </template>
 
 <script>
+import Folders from './McFolders.vue';
+import Firebase from '@/models/Firebase.js';
+
 export default {
   data() {
     return {
-      visible: false
+      visible: false,
+
     }
   },
 
+  async created() {
+    const store = new Firebase();
+    await store.init()
+    window.fstore = store;
+    
+    this.$store.commit('setFirebase', store);
+  },
+
   components: {
+    Folders
   },
 
   methods: {
@@ -37,18 +50,16 @@ export default {
 <style lang="scss">
 #macnote-app {
   @include flex-centered;
-  width: 100%;
-  height: 100%;
-  background-color: lighten($base-color, 10%); 
   // display: flex;
   // align-items: center;
   // justify-content: center;
-  
   flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: lighten($base-color, 10%); 
 
   .mc-header {
-    padding: 20px;
-    margin-top: -30px;
+    padding-bottom: 10px;
   }
 
   .mc-header > span {
@@ -64,39 +75,31 @@ export default {
   .mc-container {
     display: flex;
     flex-direction: column;
-    width: 80vw;
+    width: 95vw;
     min-width: 600px;
-    height: 80vh;
+    height: 85vh;
     background-color: rgb(250, 249, 249);
     border-radius: 4px;
     box-shadow: 0 3px 6px 3px rgba(0,0,0,0.2);
     transition: all 0.3s;
 
-    .mc-app-header {
-      display: flex;
-      flex: 1;
-      border-bottom: 1px solid rgb(230, 225, 225);
-    }
-
     .mc-app-body {
       display: flex;
-      flex: 13;
+      flex: 15;
 
-      .mc-body-folders {
-        display: flex;
-        flex: 2;
-        border-right: 1px solid rgb(230, 230, 236);
-      }
+      // .mc-body-folders {
+
+      // }
 
       .mc-body-notes {
         display: flex;
-        flex: 3;
+        flex: 5;
         border-right: 1px solid rgb(230, 230, 236);
       }
 
       .mc-body-content {
         display: flex;
-        flex: 5;
+        flex: 15;
       }
     }
   }

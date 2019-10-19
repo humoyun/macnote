@@ -113,7 +113,7 @@ export default {
   },
 
   created() {
-    console.log('******* Login ********')
+    console.log('******* Macnote Login Page ********')
     this.firebase = new Firebase();
     window.myfirebase = this.firebase;
     console.log('Firebase: ', this.firebase)
@@ -122,6 +122,7 @@ export default {
   methods: {
     login() {
       console.log('login');
+      this.firebase.login(this.email, this.password);
     },
 
     register() {

@@ -2,7 +2,7 @@
   <div
     v-if="isExternal"
     :style="styleExternalIcon"
-    class="mc-svg-external-icon mc-svg-icon"
+    class="svg-external-icon svg-icon"
     v-on="$listeners"
   />
   <svg v-else :class="svgClass" aria-hidden="true" v-on="$listeners">
@@ -33,14 +33,15 @@ export default {
     },
 
     iconName() {
-      return `#mc-icon-${this.iconClass}`
+      console.log('svg sprite --- ')
+      return `#${this.iconClass}`
     },
     
     svgClass() {
       if (this.className) {
-        return 'mc-svg-icon ' + this.className
+        return 'svg-icon ' + this.className
       } else {
-        return 'mc-svg-icon'
+        return 'svg-icon'
       }
     },
 
@@ -55,15 +56,16 @@ export default {
 </script>
 
 <style scoped>
-.mc-svg-icon {
-  width: 1em;
-  height: 1em;
+.svg-icon {
+  width: 1.2em;
+  height: 1.2em;
   vertical-align: -0.15em;
   fill: currentColor;
+  stroke: currentColor;
   overflow: hidden;
 }
 
-.mc-svg-external-icon {
+.svg-external-icon {
   background-color: currentColor;
   mask-size: cover!important;
   display: inline-block;
