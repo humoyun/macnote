@@ -18,7 +18,10 @@
       </div>
       <div></div>
       <div key="mc-trash-folder" class="mc-folders-trash">
-        <div>Trash</div>
+        <div>
+          <svg-icon icon-class="garbage" />
+          <span>Trash</span>
+        </div>
       </div>
     </div>
   </div>
@@ -49,7 +52,7 @@ export default {
     logout() {
       console.log('macnote logout')
       try {
-        this.$firebase.logout();
+        this.$firebase.logout(() => { console.log('-- callback from McFolders --') });
         // this is temp, it should return promise
         this.$router.push({name: 'login'});
       } catch (err) {
@@ -103,6 +106,8 @@ export default {
     padding: 5px;
     cursor: pointer;
     transition: margin-left 0.3s, background-color 0.2s ease-out;
+    border-top: 1px solid #ccc;
+    margin-top: 5px;
 
     &:hover {
       background-color: lighten($base-color, 60);

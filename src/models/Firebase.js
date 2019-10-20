@@ -115,7 +115,6 @@ class Firebase {
     try {
       const resp = await this.auth.signInWithEmailAndPassword(email, password);
       if (resp) {
-        console.log("Firebase.login() : ", resp);
         console.log("Firebase.login() : ", resp.user);
         this.ck.set(this.ck.USER, resp.user);
         this.ck.set(this.ck.TOKEN, resp.user.refreshToken);
@@ -125,13 +124,15 @@ class Firebase {
     }
   }
 
-  logout() {
+  logout(cb) {
+    // temp
     this.ck.clear();
     return this.auth
       .signOut()
       .then(data => {
         console.log("firebase logout: ", data);
         // this.ck.clear();
+        cb();
       })
       .catch(err => {
         console.error(err);

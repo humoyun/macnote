@@ -6,13 +6,13 @@
           <h1>Create Account</h1>
           <div class="social-container">
             <a href="#" class="social">
-              <i class="fab facebook-f"></i>
+              <svg-icon icon-class="google-plus" size="38"></svg-icon>
             </a>
             <a href="#" class="social">
-              <i class="fab facebook-f"></i>
+              <svg-icon icon-class="facebook" size="38"></svg-icon>
             </a>
             <a href="#" class="social">
-              <i class="fab facebook-f"></i>
+              <svg-icon icon-class="twitter" size="38"></svg-icon>
             </a>
           </div>
           <span>or use your email for registration</span>
@@ -42,16 +42,14 @@
         <div class="form-box">
           <h1>Sign In</h1>
           <div class="social-container">
-            <svg-icon icon-class="facebook" />
-
             <a href="#" class="social">
-              <i class="fab facebook-f"></i>
+              <svg-icon icon-class="google-plus" size="38"></svg-icon>
             </a>
             <a href="#" class="social">
-              <i class="fab facebook-f"></i>
+              <svg-icon icon-class="facebook" size="38"></svg-icon>
             </a>
             <a href="#" class="social">
-              <i class="fab facebook-f"></i>
+              <svg-icon icon-class="twitter" size="38"></svg-icon>
             </a>
           </div>
           <span>or use your account</span>
@@ -188,8 +186,8 @@ export default {
     }
 
     button {
-      border-radius: 20px;
-      border: 1px solid lighten($base-color, 15%);
+      border-radius: 5px;
+      border: none;
       background-color: lighten($base-color, 15%);
       color: #FFFFFF;
       font-size: 12px;
@@ -197,16 +195,22 @@ export default {
       padding: 12px 45px;
       letter-spacing: 1px;
       text-transform: uppercase;
-      transition: transform 80ms ease-in;
+      transition: transform 0.4s ease-in;
       cursor: pointer;
-    }
 
-    button:active {
-      transform: scale(0.95);
-    }
+      &:hover {
+        transform: scale(0.95);
+        background-color: lighten($base-color, 17%);
+      }
 
-    button:focus {
-      outline: none;
+      &:active {
+        transform: scale(0.95);
+        background-color: lighten($base-color, 20%);
+      }
+
+      &:focus {
+        outline: none;
+      }
     }
 
     button {
@@ -240,6 +244,7 @@ export default {
         margin: 8px 0;
         width: 60%;
         outline: none;
+        border-radius: 5px;
       }
     }
 
@@ -336,8 +341,8 @@ export default {
     }
 
     .social-container a {
-      border: 1px solid #DDDDDD;
-      border-radius: 50%;
+      // border: 1px solid #DDDDDD;
+      // border-radius: 50%;
       display: inline-flex;
       justify-content: center;
       align-items: center;

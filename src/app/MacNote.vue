@@ -98,6 +98,8 @@ export default {
         display: flex;
         flex: 5;
         border-right: 1px solid rgb(230, 230, 236);
+        // background-image: linear-gradient(180deg,#fff,#f5f5fa);
+        // background-color: #f5f5fa;
       }
 
       .mc-body-content {
