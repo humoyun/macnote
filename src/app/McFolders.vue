@@ -1,10 +1,20 @@
 <template>
   <div class="mc-folders-container">
-    <div class="mc-folders-header">Folders</div>
+    <div class="mc-folders-header">
+      <span>Folders</span>
+      <mc-button @click="logout()">Logout</mc-button>
+    </div>
+
     <div class="mc-folders-list">
-      <div v-for="item of local" :key="item.id" class="mc-folders-item">
-        <svg-icon icon-class="folder" />
-        <div>{{ item.name }}</div>
+      <div
+        v-for="folder of $db.folders"
+        :key="folder.id"
+        class="mc-folders-item"
+      >
+        <div>
+          <svg-icon icon-class="folder" />
+          <span>{{ folder.name }}</span>
+        </div>
       </div>
       <div></div>
       <div key="mc-trash-folder" class="mc-folders-trash">
@@ -15,20 +25,40 @@
 </template>
 
 <script>
-  export default {
-    name: '',
-    data() {
-      return {
-        firebase: this.$store.state.firebase,
-        local: [
-          { name: 'meetups', id: 123 },
-          { name: 'awesome', id: 223 },
-          { name: 'courses', id: 323 },
-          { name: 'brainstrominng', id: 523 },
-        ]
+import McButton from '@/components/Button.vue';
+
+export default {
+  name: '',
+
+  components: {
+    McButton
+  },
+
+  data() {
+    return {
+      
+    }
+  },
+
+  created() {
+    console.log('======================')
+    console.log(this.$db.folders);
+  },
+
+  methods: {
+    logout() {
+      console.log('macnote logout')
+      try {
+        this.$firebase.logout();
+        // this is temp, it should return promise
+        this.$router.push({name: 'login'});
+      } catch (err) {
+        console.error(err);
       }
+      
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -68,6 +98,7 @@
       }
     }
   }
+  
   .mc-folders-trash {
     padding: 5px;
     cursor: pointer;

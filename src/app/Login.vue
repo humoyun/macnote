@@ -120,9 +120,21 @@ export default {
   },
 
   methods: {
-    login() {
-      console.log('login');
-      this.firebase.login(this.email, this.password);
+
+    async login() {
+      if (!this.email && !this.password) {
+        console.log('email or password empty')
+        return;
+      }
+      try {
+        const rs = await this.$firebase.login(this.email, this.password);
+        
+        // if (rs) 
+        this.$router.push({name: 'app'});
+      } catch(err) {
+        console.error(err);
+      }
+      
     },
 
     register() {

@@ -1,4 +1,4 @@
-class Manager {
+class DBManager {
   constructor() {
     this.folders = [];
     this.notes = [];
@@ -16,10 +16,10 @@ class Manager {
   setNote() {}
 
   static fromJSON(raw) {
-    const memo = new MemoManager();
-    memo.copy(raw);
+    const db = new DBManager();
+    db.copy(raw);
 
-    return memo;
+    return db;
   }
 
   static copy(data) {
@@ -36,3 +36,5 @@ class Manager {
     return -1;
   }
 }
+
+export default DBManager;

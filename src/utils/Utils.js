@@ -2,6 +2,10 @@
  * @param {string} path
  * @returns {Boolean}
  */
-export function isExternal(path) {
+
+const Utils = {};
+Utils.isExternal = path => {
   return /^(https?:|mailto:|tel:)/.test(path);
-}
+};
+
+export default Utils;

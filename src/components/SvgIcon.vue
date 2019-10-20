@@ -5,17 +5,23 @@
     class="svg-external-icon svg-icon"
     v-on="$listeners"
   />
-  <svg v-else :class="svgClass" aria-hidden="true" v-on="$listeners">
+  <svg
+    v-else
+    :class="svgClass"
+    :style="{ width: `${size}px`, height: `${size}px` }"
+    aria-hidden="true"
+    v-on="$listeners"
+  >
     <use :xlink:href="iconName" />
   </svg>
 </template>
 
 <script>
-import { isExternal } from '@/utils/Utils';
+// doc: https://panjiachen.github.io/vue-element-admin-site/feature/component/svg-icon.html#usage
+import Utils from '@/utils/Utils';
 
 export default {
-  name: 'svg-icon',
-
+  name: 'SvgIcon',
   props: {
     iconClass: {
       type: String,
@@ -24,50 +30,48 @@ export default {
     className: {
       type: String,
       default: ''
+    },
+    size: {
+      type: String,
+      default: '1.2em'
     }
   },
-
   computed: {
     isExternal() {
-      return isExternal(this.iconClass)
+      return Utils.isExternal(this.iconClass);
     },
-
     iconName() {
-      console.log('svg sprite --- ')
-      return `#${this.iconClass}`
+      return `#icon-${this.iconClass}`;
     },
-    
     svgClass() {
       if (this.className) {
-        return 'svg-icon ' + this.className
-      } else {
-        return 'svg-icon'
+        return `svg-icon ${this.className}`;
       }
+      return 'svg-icon';
     },
-
     styleExternalIcon() {
       return {
         mask: `url(${this.iconClass}) no-repeat 50% 50%`,
         '-webkit-mask': `url(${this.iconClass}) no-repeat 50% 50%`
-      }
+      };
     }
   }
-}
+};
 </script>
 
 <style scoped>
 .svg-icon {
-  width: 1.2em;
-  height: 1.2em;
+  width: 1.1em;
+  height: 1.1em;
+  overflow: hidden;
   vertical-align: -0.15em;
   fill: currentColor;
   stroke: currentColor;
-  overflow: hidden;
 }
 
 .svg-external-icon {
-  background-color: currentColor;
-  mask-size: cover!important;
   display: inline-block;
+  background-color: currentColor;
+  mask-size: cover !important;
 }
 </style>

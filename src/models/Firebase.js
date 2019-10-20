@@ -11,6 +11,7 @@ const firebaseConfig = {
 import * as firebaseApp from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import myCookie from "./CkManager.js";
 
 class Firebase {
   constructor() {
@@ -18,12 +19,18 @@ class Firebase {
     this.auth = null;
     this.db = null;
     this.user = null;
+    this.ck = myCookie;
+    this.dataLoaded = false;
   }
 
   async init() {
-    await this.app.initializeApp(firebaseConfig);
-    this.auth = this.app.auth();
-    this.db = this.app.firestore();
+    // if (!this.user) return;
+    if (this.app.apps.length) return;
+    else await this.app.initializeApp(firebaseConfig);
+    // firebase.initializeApp({});
+    // _isTerminated;
+    this.auth = await this.app.auth();
+    this.db = await this.app.firestore();
     // update firestore settings
     // this.db.settings({ timestampsInSnapshots: true })
 
@@ -31,29 +38,45 @@ class Firebase {
       console.log("[ auth status change ] ", user);
       this.user = user;
       if (user) {
-        console.log("logged in");
-
-        this.db
-          .collection("folders")
-          .get()
-          .then(snapshot => {
-            console.log("memos: snapshot.docs: ", snapshot.docs);
-            snapshot.docs.forEach((doc, index) => {
-              const data = doc.data();
-              console.log(index, " : ", data);
-            });
-          });
-
-        // this.db.collection('folder').add({
-        //   name: 'new folder',
-        //   notes: [],
-        //   created: new Date
-        //
-        // }).then();
+        console.log("[********* firebase auth: logged in **********]");
       } else {
         console.log("logged out");
+        this.ck.clear();
       }
     });
+  }
+
+  async getFolders() {
+    const folders = [];
+    if (!this.$db) this.db = await this.app.firestore();
+
+    try {
+      const resp = await this.db.collection("folders").get();
+      if (resp) {
+        resp.docs.forEach((doc, index) => {
+          const folder = doc.data();
+          folder.id = doc.id;
+          folders.push(folder);
+        });
+      }
+      this.dataLoaded = true;
+      console.log("-++++", resp);
+    } catch (error) {
+      console.error(error);
+    }
+
+    return folders;
+  }
+
+  addFolder() {
+    this.db
+      .collection("folder")
+      .add({
+        name: "new folder",
+        notes: [],
+        created: new Date()
+      })
+      .then();
   }
 
   isUserLoggedIn() {
@@ -88,21 +111,31 @@ class Firebase {
       });
   }
 
-  login(email, password) {
-    this.auth
-      .signInWithEmailAndPassword(email, password)
-      .then(data => {
-        console.log("firebase login: ", data.user);
-      })
-      .catch(e => {
-        console.error("*** sign in error: ", e);
-      });
+  async login(email, password) {
+    try {
+      const resp = await this.auth.signInWithEmailAndPassword(email, password);
+      if (resp) {
+        console.log("Firebase.login() : ", resp);
+        console.log("Firebase.login() : ", resp.user);
+        this.ck.set(this.ck.USER, resp.user);
+        this.ck.set(this.ck.TOKEN, resp.user.refreshToken);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   logout() {
-    this.auth.signOut().then(data => {
-      console.log("firebase logout: ", data);
-    });
+    this.ck.clear();
+    return this.auth
+      .signOut()
+      .then(data => {
+        console.log("firebase logout: ", data);
+        // this.ck.clear();
+      })
+      .catch(err => {
+        console.error(err);
+      });
     // this.auth.isSignInWithEmailLink
   }
 }

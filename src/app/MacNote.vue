@@ -4,7 +4,7 @@
       <span>Macnote App</span>
       <span>Currently under development</span>
     </div>
-    <div class="mc-container">
+    <div class="mc-container" v-if="$firebase.dataLoaded">
       <div class="mc-app-body">
         <div></div>
         <folders class="mc-body-folders"></folders>
@@ -18,21 +18,24 @@
 <script>
 import Folders from './McFolders.vue';
 import Firebase from '@/models/Firebase.js';
+import DBManager from '@/models/DBManager.js';
 
 export default {
   data() {
     return {
       visible: false,
-
     }
   },
 
   async created() {
-    const store = new Firebase();
-    await store.init()
-    window.fstore = store;
-    
-    this.$store.commit('setFirebase', store);
+    try {
+      const resp = await this.$firebase.getFolders();
+      if (resp) {
+        this.$db.setFolders(resp);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   },
 
   components: {
@@ -111,7 +114,7 @@ export default {
 
 @media only screen and (max-width: 1000px) {
   .mc-body-folders {
-    flex: 0;
+    width: 0;
   }
 
   .mc-body-notes {

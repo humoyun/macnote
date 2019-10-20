@@ -22,7 +22,7 @@ export default {
 </script>
 
 
-<style>
+<style lang="scss">
 /* .mc-button {
   padding: 8px 16px;
   border-radius: 2px;
@@ -47,7 +47,7 @@ export default {
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
-  padding: 12px 20px;
+  padding: 6px 12px;
   font-size: 14px;
   border-radius: 4px;
 }
