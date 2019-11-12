@@ -1,29 +1,26 @@
-# MacNote - Clone of macOS's Notes Application
+# MacNote - MacOS's Notes application clone
  
 ## Project setup
 ```
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Supported features:
+  - Firebase based Authentication by email and
+  - Social login with Google, Facebook, Twitter
+  - Note folders
+  - Full text search for notes
+  - Note tags
+  - Favorite notes
+  - Pinned notes
+  - Rich text editing
+  - Sharing with others by email or link
+  - Realtime updates using Firestore
+  - Firebase functions for bacground tasks
+  - Image uploads
+  - Guest mode
 
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
 
 ## Firebase related commands
 

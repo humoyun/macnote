@@ -106,15 +106,11 @@ export default {
       email: '',
       username: '',
       password: '',
-      firebase: null
     }
   },
 
   created() {
     console.log('******* Macnote Login Page ********')
-    this.firebase = new Firebase();
-    window.myfirebase = this.firebase;
-    console.log('Firebase: ', this.firebase)
   },
 
   methods: {
@@ -137,7 +133,7 @@ export default {
 
     register() {
       console.log('register');
-      this.firebase.createUser(this.email, this.password);
+      this.$firebase.createUser(this.email, this.password);
     },
     
     displayForm(arg) {

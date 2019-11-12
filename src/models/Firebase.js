@@ -8,16 +8,24 @@ const firebaseConfig = {
   appId: "1:690127207690:web:95c7ad05b3f17f418d0ef3"
 };
 
+/**
+ * Tutorial
+ * https://github.com/Vrijraj/Firebase-For-Web
+ */
+
 import * as firebaseApp from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/functions";
 import myCookie from "./CkManager.js";
+import undefined from "firebase/auth";
 
 class Firebase {
   constructor() {
     this.app = firebaseApp;
     this.auth = null;
     this.db = null;
+    this.func = null;
     this.user = null;
     this.ck = myCookie;
     this.dataLoaded = false;
@@ -31,6 +39,7 @@ class Firebase {
     // _isTerminated;
     this.auth = await this.app.auth();
     this.db = await this.app.firestore();
+    this.func = await this.app.functions();
     // update firestore settings
     // this.db.settings({ timestampsInSnapshots: true })
 
@@ -68,27 +77,62 @@ class Firebase {
     return folders;
   }
 
-  addFolder() {
+  addFolder(folderData) {
     this.db
-      .collection("folder")
+      .collection("folders")
       .add({
-        name: "new folder",
+        name: folderData.name || "New Folder",
         notes: [],
         created: new Date()
       })
-      .then();
+      .then(docRef => {
+        console.log("Document written with ID: ", docRef.id);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+
+  addUser(userInfo) {
+    // https://github.com/Vrijraj/Firebase-For-Web
+    // https://codeburst.io/throttling-and-debouncing-in-javascript-b01cad5c8edf
+    this.db
+      .collection("users")
+      .add({
+        id: userInfo.id,
+        username: userInfo.username,
+        roles: userInfo.roles,
+        email: userInfo.email,
+        created: new Date()
+      })
+      .then(docRef => {
+        console.log("add doc on users: ", docRef);
+      })
+      .catch(err => {
+        console.error("add user info: ", err);
+      });
   }
 
   isUserLoggedIn() {
     return this.user !== null;
   }
 
-  createUser(email, password) {
+  createUser(email, password, username) {
+    // this.func.firestore.document("users/{user}").onCreate((snap, context) => {
+    //   // Object representing the document
+    //   const userData = snap.data();
+    //   console.log("snap: ", snap);
+    //   console.log("createUser: ", userData);
+    //   console.log("context; ", context);
+    // });
+
     this.auth
       .createUserWithEmailAndPassword(email, password)
       .then(data => {
-        console.log("firebase auth: ", data.user);
-
+        console.log("firebase auth: ", data.user, data.uid);
+        if (username) {
+          this.updateUser({ username });
+        }
         // we need to create empty collection in firestore
         // using this users' `uid` (e.g. cfXgzeNROsfTdVEOLlOcBl27UVD2)
 
@@ -108,6 +152,24 @@ class Firebase {
         } else {
           console.log(errorMessage);
         }
+      });
+  }
+
+  updateUser(userInfo) {
+    const payload = {};
+
+    payload.displayName = userInfo.username ? userInfo.username : undefined;
+    payload.photoURL = userInfo.photoURL ? userInfo.photoURL : undefined;
+
+    this.auth()
+      .currentUser.updateProfile(payload)
+      .then(resp => {
+        // Update successful.
+        console.log("User Profile Updated Successfully", resp);
+      })
+      .catch(err => {
+        // An error happened.
+        console.error("userProfile update: ", err);
       });
   }
 
@@ -133,12 +195,16 @@ class Firebase {
         console.log("firebase logout: ", data);
         // this.ck.clear();
         cb();
+        return Promise.resolve(data);
       })
       .catch(err => {
         console.error(err);
+        return Promise.reject(err);
       });
     // this.auth.isSignInWithEmailLink
   }
+
+  static createDate() {}
 }
 
 export default Firebase;
