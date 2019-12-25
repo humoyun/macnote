@@ -2,7 +2,6 @@
   <div class="mc-folders-container">
     <div class="mc-folders-header">
       <span>Folders</span>
-      <mc-button @click="logout()">Logout</mc-button>
     </div>
 
     <div class="mc-folders-list">
@@ -16,7 +15,6 @@
           <span>{{ folder.name }}</span>
         </div>
       </div>
-      <div></div>
       <div key="mc-trash-folder" class="mc-folders-trash">
         <div>
           <svg-icon icon-class="garbage" />
@@ -24,44 +22,39 @@
         </div>
       </div>
     </div>
+
+    <div class="mc-folders-footer">
+      <mc-button @click="logout()" type="info" plain>Logout</mc-button>
+    </div>
   </div>
 </template>
 
 <script>
-import McButton from '@/components/Button.vue';
-
 export default {
-  name: '',
-
-  components: {
-    McButton
-  },
-
   data() {
-    return {
-      
-    }
+    return {};
   },
 
   created() {
-    console.log('======================')
+    console.log("======================");
     console.log(this.$db.folders);
   },
 
   methods: {
     logout() {
-      console.log('macnote logout')
+      console.log("macnote logout");
       try {
-        this.$firebase.logout(() => { console.log('-- callback from McFolders --') });
+        this.$firebase.logout(() => {
+          console.log("-- callback from McFolders --");
+        });
         // this is temp, it should return promise
-        this.$router.push({name: 'login'});
+        this.$router.push({ name: "login" });
       } catch (err) {
         console.error(err);
       }
-      
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -73,16 +66,16 @@ export default {
   flex-direction: column;
   border-right: 1px solid rgb(230, 230, 236);
   background-color: #f2f2f2;
-  
+
   .mc-folders-header {
     width: 100%;
     height: 40px;
-    border-bottom: 1px solid #ccc;
+    @include flex-centered;
   }
 
   .mc-folders-list {
     width: 100%;
-    height: calc(100% - 50px);
+    height: calc(100% - 40px - 40px);
     display: flex;
     flex-direction: column;
 
@@ -101,7 +94,7 @@ export default {
       }
     }
   }
-  
+
   .mc-folders-trash {
     padding: 5px;
     cursor: pointer;
@@ -117,6 +110,14 @@ export default {
     div {
       margin-left: 10px;
     }
+  }
+
+  .mc-folders-footer {
+    height: 40px;
+    border-top: 1px solid rgb(233, 229, 229);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 </style>

@@ -5,6 +5,7 @@
       <span>Currently under development</span>
     </div>
     <div class="mc-container" v-if="$firebase.dataLoaded">
+      <mc-header></mc-header>
       <div class="mc-app-body">
         <div></div>
         <folders class="mc-body-folders"></folders>
@@ -16,15 +17,16 @@
 </template>
 
 <script>
-import Folders from './McFolders.vue';
-import Firebase from '@/models/Firebase.js';
-import DBManager from '@/models/DBManager.js';
+import Folders from "./McFolders.vue";
+import McHeader from "./McHeader.vue";
+import Firebase from "@/models/Firebase.js";
+import DBManager from "@/models/DBManager.js";
 
 export default {
   data() {
     return {
-      visible: false,
-    }
+      visible: false
+    };
   },
 
   async created() {
@@ -39,7 +41,8 @@ export default {
   },
 
   components: {
-    Folders
+    Folders,
+    McHeader
   },
 
   methods: {
@@ -47,32 +50,34 @@ export default {
       // this.visible = true;
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
 #macnote-app {
   @include flex-centered;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
+
   flex-direction: column;
   width: 100%;
   height: 100%;
-  background-color: lighten($base-color, 10%); 
+  background-color: lighten($base-color, 10%);
 
   .mc-header {
     padding-bottom: 10px;
   }
 
-  .mc-header > span {
-    display: block;
-    color: $grey-color;
+  .mc-header {
+    span {
+      display: block;
+      color: $grey-color;
+    }
   }
 
-  .mc-header > span:nth-child(1) {
-    font-size: 32px;
-    color: white;
+  .mc-header {
+    span:nth-child(1) {
+      font-size: 32px;
+      color: white;
+    }
   }
 
   .mc-container {
@@ -83,7 +88,7 @@ export default {
     height: 85vh;
     background-color: rgb(250, 249, 249);
     border-radius: 4px;
-    box-shadow: 0 3px 6px 3px rgba(0,0,0,0.2);
+    box-shadow: 0 3px 6px 3px rgba(0, 0, 0, 0.2);
     transition: all 0.3s;
 
     .mc-app-body {
@@ -96,7 +101,7 @@ export default {
 
       .mc-body-notes {
         display: flex;
-        flex: 5;
+        flex: 6;
         border-right: 1px solid rgb(230, 230, 236);
         // background-image: linear-gradient(180deg,#fff,#f5f5fa);
         // background-color: #f5f5fa;
@@ -104,13 +109,13 @@ export default {
 
       .mc-body-content {
         display: flex;
-        flex: 15;
+        flex: 14;
       }
     }
   }
 
   .mc-container:hover {
-    box-shadow: 0 5px 10px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 10px 5px rgba(0, 0, 0, 0.2);
   }
 }
 

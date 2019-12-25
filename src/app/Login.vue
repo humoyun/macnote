@@ -74,21 +74,19 @@
         <div class="overlay">
           <div class="overlay-panel overlay-left">
             <h1>Welcome Back!</h1>
-            <p>To keep connected with us please login with your personal info</p>
-            <button
-              class="ghost"
-              id="signIn"
-              @click="displayForm('sign-in')"
-            >Sign In</button>
+            <p>
+              To keep connected with us please login with your personal info
+            </p>
+            <button class="ghost" id="signIn" @click="displayForm('sign-in')">
+              Sign In
+            </button>
           </div>
           <div class="overlay-panel overlay-right">
             <h1>Macnote</h1>
             <p>Enter your personal details and start journey with us</p>
-            <button
-              class="ghost"
-              id="signUp"
-              @click="displayForm('sign-up')"
-            >Sign Up</button>
+            <button class="ghost" id="signUp" @click="displayForm('sign-up')">
+              Sign Up
+            </button>
           </div>
         </div>
       </div>
@@ -97,54 +95,52 @@
 </template>
 
 <script>
-import Firebase from '@/models/Firebase.js';
+import Firebase from "@/models/Firebase.js";
 
 export default {
   data() {
     return {
       rightPanelActive: false,
-      email: '',
-      username: '',
-      password: '',
-    }
+      email: "",
+      username: "",
+      password: ""
+    };
   },
 
   created() {
-    console.log('******* Macnote Login Page ********')
+    console.log("******* Macnote Login Page ********");
   },
 
   methods: {
-
     async login() {
       if (!this.email && !this.password) {
-        console.log('email or password empty')
+        console.log("email or password empty");
         return;
       }
       try {
         const rs = await this.$firebase.login(this.email, this.password);
-        
-        // if (rs) 
-        this.$router.push({name: 'app'});
-      } catch(err) {
+
+        // if (rs)
+        this.$router.push({ name: "app" });
+      } catch (err) {
         console.error(err);
       }
-      
     },
 
     register() {
-      console.log('register');
+      console.log("register");
       this.$firebase.createUser(this.email, this.password);
     },
-    
+
     displayForm(arg) {
-      if (arg==='sign-in') {
+      if (arg === "sign-in") {
         this.rightPanelActive = false;
       } else {
         this.rightPanelActive = true;
       }
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
@@ -184,8 +180,8 @@ export default {
     button {
       border-radius: 5px;
       border: none;
-      background-color: lighten($base-color, 15%);
-      color: #FFFFFF;
+      background-color: lighten($primary-color, 15%);
+      color: #ffffff;
       font-size: 12px;
       font-weight: bold;
       padding: 12px 45px;
@@ -196,12 +192,12 @@ export default {
 
       &:hover {
         transform: scale(0.95);
-        background-color: lighten($base-color, 17%);
+        background-color: lighten($primary-color, 17%);
       }
 
       &:active {
         transform: scale(0.95);
-        background-color: lighten($base-color, 20%);
+        background-color: lighten($primary-color, 20%);
       }
 
       &:focus {
@@ -212,10 +208,10 @@ export default {
     button {
       .ghost {
         background-color: transparent;
-        border-color: #FFFFFF;
+        border-color: #ffffff;
       }
     }
-    
+
     .form-container {
       position: absolute;
       top: 0;
@@ -223,7 +219,7 @@ export default {
       transition: all 0.6s ease-in-out;
 
       .form-box {
-        background-color: #FFFFFF;
+        background-color: #ffffff;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -247,7 +243,7 @@ export default {
     // .container {
     //   background-color: #fff;
     //   border-radius: 10px;
-    //     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
+    //     box-shadow: 0 14px 28px rgba(0,0,0,0.25),
     //       0 10px 10px rgba(0,0,0,0.22);
     //   position: relative;
     //   overflow: hidden;
@@ -270,12 +266,14 @@ export default {
     }
 
     @keyframes show {
-      0%, 49.99% {
+      0%,
+      49.99% {
         opacity: 0;
         z-index: 1;
       }
-      
-      50%, 100% {
+
+      50%,
+      100% {
         opacity: 1;
         z-index: 5;
       }
@@ -293,13 +291,21 @@ export default {
     }
 
     .overlay {
-      background: lighten( $base-color, 15% );
-      background: -webkit-linear-gradient(to right, $base-color, lighten( $base-color, 15% ));
-      background: linear-gradient(to right, $base-color, lighten( $base-color, 15% ));
+      background: lighten($primary-color, 15%);
+      background: -webkit-linear-gradient(
+        to right,
+        $primary-color,
+        lighten($primary-color, 15%)
+      );
+      background: linear-gradient(
+        to right,
+        $primary-color,
+        lighten($primary-color, 15%)
+      );
       background-repeat: no-repeat;
       background-size: cover;
       background-position: 0 0;
-      color: #FFFFFF;
+      color: #ffffff;
       position: relative;
       left: -100%;
       height: 100%;
