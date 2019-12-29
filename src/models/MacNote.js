@@ -1,9 +1,13 @@
 import EventEmitter from "./EventEmitter.js";
 
-class MacNote extends EventEmitter {
+class Macnote extends EventEmitter {
   constructor() {
     super();
+    this.folders = [];
+    this.folder = null;
+    this.notes = [];
+    this.note = null;
   }
 }
 
-export default MacNote;
+export default Macnote;

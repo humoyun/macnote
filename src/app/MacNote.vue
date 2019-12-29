@@ -6,10 +6,11 @@
     </div>
     <div class="mc-container" v-if="$firebase.dataLoaded">
       <mc-header></mc-header>
+
       <div class="mc-app-body">
         <div></div>
-        <folders class="mc-body-folders"></folders>
-        <div class="mc-body-notes"></div>
+        <mc-folders class="mc-body-folders"></mc-folders>
+        <mc-notes class="mc-body-notes"></mc-notes>
         <div class="mc-body-content"></div>
       </div>
     </div>
@@ -17,8 +18,9 @@
 </template>
 
 <script>
-import Folders from "./McFolders.vue";
-import McHeader from "./McHeader.vue";
+import McFolders from "./FolderList.vue";
+import McNotes from "./NoteList.vue";
+import McHeader from "./Header.vue";
 import Firebase from "@/models/Firebase.js";
 import DBManager from "@/models/DBManager.js";
 
@@ -41,8 +43,9 @@ export default {
   },
 
   components: {
-    Folders,
-    McHeader
+    McFolders,
+    McHeader,
+    McNotes
   },
 
   methods: {

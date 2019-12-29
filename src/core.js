@@ -1,6 +1,6 @@
 import Firebase from "@/models/Firebase.js";
 import DBManager from "@/models/DBManager.js";
-import myCookie from "@/models/CkManager.js";
+import myCookie from "@/models/CookieManager.js";
 
 const $firebase = new Firebase();
 const $db = new DBManager();

@@ -13,7 +13,11 @@
       }
     ]"
   >
-    <span v-if="$slots.default"><slot></slot></span>
+    <!-- if loading is true show loading icon on the center -->
+    <svg-icon icon-class="loading" v-if="loading"></svg-icon>
+    <span v-if="$slots.default">
+      <slot></slot>
+    </span>
   </button>
 </template>
 
@@ -133,13 +137,13 @@ export default {
   }
 
   &.mc-button--info {
-    background: #909399;
-    border-color: #909399;
+    background: #c0c1c4;
+    border-color: #c0c1c4;
     color: #fff;
 
     &:hover {
-      background: lighten(#909399, 10%);
-      border-color: lighten(#909399, 8%);
+      background: lighten(#c0c1c4, 10%);
+      border-color: lighten(#c0c1c4, 8%);
     }
   }
 

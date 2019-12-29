@@ -14,6 +14,7 @@ export default new Vuex.Store({
     getFirebase(state) {
       state.firebase;
     },
+
     getDB(state) {
       state.db;
     }
@@ -23,6 +24,7 @@ export default new Vuex.Store({
     setFirebase(state, data) {
       state.firebase = data;
     },
+
     setDB(state, data) {
       state.db = data;
     }

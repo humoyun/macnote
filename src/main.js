@@ -3,7 +3,7 @@ import App from "./App.vue";
 import router from "./router.js";
 import store from "./store/index.js";
 import GlobalVar from "@/libs/global_var.js";
-import "@/components/_globals";
+import "@/components/_globals.js";
 
 import "./icons";
 

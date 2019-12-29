@@ -1,6 +1,6 @@
 import * as cookie from "js-cookie";
 
-class CkManager {
+class CookieManager {
   constructor() {
     this.cookie = cookie;
     this.USER = "macnote_user";
@@ -38,6 +38,6 @@ class CkManager {
   }
 }
 
-const ck = new CkManager();
+const ck = new CookieManager();
 window.myCookie = ck;
 export default ck;

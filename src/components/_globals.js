@@ -26,8 +26,6 @@ requireComponent.keys().forEach(fileName => {
     )
   );
 
-  console.log("->>> ", componentName);
-
   // Register component globally
   Vue.component(
     componentName,

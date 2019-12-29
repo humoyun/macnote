@@ -1,9 +1,9 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Macnote from "@/app/MacNote.vue";
+import Macnote from "@/app/Macnote.vue";
 import Login from "@/app/Login.vue";
 import PageNotFound from "@/app/PageNotFound.vue";
-import myCookie from "@/models/CkManager.js";
+import myCookie from "@/models/CookieManager.js";
 
 Vue.use(Router);
 
@@ -20,6 +20,9 @@ export default new Router({
         } else {
           next();
         }
+      },
+      meta: {
+        authenticated: true
       }
     },
 

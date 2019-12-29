@@ -9,6 +9,7 @@
         v-for="folder of $db.folders"
         :key="folder.id"
         class="mc-folders-item"
+        @click="selectFolder(folder.id)"
       >
         <div>
           <svg-icon icon-class="folder" />
@@ -41,6 +42,10 @@ export default {
   },
 
   methods: {
+    selectFolder(id) {
+      this.$db.setFolderById(id)
+    },
+
     logout() {
       console.log("macnote logout");
       try {

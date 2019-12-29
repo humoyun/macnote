@@ -32,11 +32,11 @@ export default {
     },
     width: {
       type: String,
-      default: '60'
+      default: "60"
     },
     padding: {
       type: String,
-      default: '10'
+      default: "10"
     }
   },
 
@@ -49,33 +49,32 @@ export default {
   data() {
     return {
       visible: this.value,
-      prefixCls: 'mc'
-    }
+      prefixCls: "mc"
+    };
   }
-}
+};
 </script>
 
-<style>
+<style lang="scss">
 #mac-modal {
-}
+  .mc-modal-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
 
-.mc-modal-mask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-}
-
-.mc-modal-wrapper {
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  width: 800px;
-  height: 400px;
-  transform: translate(-50%, -30%);
-  background-color: white;
-  border-radius: 3px;
+  .mc-modal-wrapper {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    width: 800px;
+    height: 400px;
+    transform: translate(-50%, -30%);
+    background-color: #fff;
+    border-radius: 3px;
+  }
 }
 </style>

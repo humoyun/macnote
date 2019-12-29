@@ -17,7 +17,7 @@ import * as firebaseApp from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/functions";
-import myCookie from "./CkManager.js";
+import myCookie from "./CookieManager.js";
 import undefined from "firebase/auth";
 
 class Firebase {
@@ -27,7 +27,6 @@ class Firebase {
     this.db = null;
     this.func = null;
     this.user = null;
-    this.ck = myCookie;
     this.dataLoaded = false;
   }
 
@@ -50,7 +49,7 @@ class Firebase {
         console.log("[********* firebase auth: logged in **********]");
       } else {
         console.log("logged out");
-        this.ck.clear();
+        myCookie.clear();
       }
     });
   }
@@ -77,20 +76,20 @@ class Firebase {
     return folders;
   }
 
-  addFolder(folderData) {
-    this.db
-      .collection("folders")
-      .add({
+  async addFolder(folderData) {
+    try {
+      const docRef = await this.db.collection("folders").add({
         name: folderData.name || "New Folder",
         notes: [],
         created: new Date()
-      })
-      .then(docRef => {
-        console.log("Document written with ID: ", docRef.id);
-      })
-      .catch(err => {
-        console.error(err);
       });
+
+      if (docRef) {
+        console.log("Document written with ID: ", docRef.id);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   addUser(userInfo) {
@@ -178,22 +177,52 @@ class Firebase {
       const resp = await this.auth.signInWithEmailAndPassword(email, password);
       if (resp) {
         console.log("Firebase.login() : ", resp.user);
-        this.ck.set(this.ck.USER, resp.user);
-        this.ck.set(this.ck.TOKEN, resp.user.refreshToken);
+        console.log("Firebase resp : ", resp);
+        const token = await resp.user.getIdToken();
+        myCookie.set(myCookie.USER, resp.user);
+        myCookie.set(myCookie.TOKEN, token);
       }
     } catch (err) {
       console.error(err);
     }
   }
 
+  // exports.login = (req, res) => {
+  //   const user = {
+  //     email: req.body.email,
+  //     password: req.body.password
+  //   };
+
+  //   const { valid, errors } = validateLoginData(user);
+  //   if (!valid) return res.status(400).json(errors);
+
+  //   firebase
+  //     .auth()
+  //     .signInWithEmailAndPassword(user.email, user.password)
+  //     .then(data => {
+  //       return data.user.getIdToken();
+  //     })
+  //     .then(token => {
+  //       return res.json({ token });
+  //     })
+  //     .catch(err => {
+  //       if (
+  //         err.code === "auth/wrong-password" ||
+  //         err.code === "auth/user-not-found"
+  //       )
+  //         return res.status(403).json({ general: "Wrong credentials" });
+  //       return res.status(500).json({ error: err.code });
+  //     });
+  // };
+
   logout(cb) {
     // temp
-    this.ck.clear();
+    myCookie.clear();
     return this.auth
       .signOut()
       .then(data => {
         console.log("firebase logout: ", data);
-        // this.ck.clear();
+        // myCookie.clear();
         cb();
         return Promise.resolve(data);
       })

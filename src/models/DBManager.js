@@ -1,9 +1,9 @@
 class DBManager {
   constructor() {
     this.folders = [];
+    this.folder = null;
     this.notes = [];
     this.content = "";
-    this.folder = null;
     this.note = null;
   }
 
@@ -11,7 +11,17 @@ class DBManager {
     this.folders = data;
   }
 
-  setFolder() {}
+  setFolderById(id) {
+    const index = DBManager.getIndexById(id, this.folders);
+
+    if (index > -1) {
+      this.setFolder(index);
+    }
+  }
+
+  setFolder(index) {
+    this.folder = this.folders[index];
+  }
 
   setNote() {}
 
