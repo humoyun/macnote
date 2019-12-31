@@ -1,5 +1,20 @@
 <template>
   <div class="mc-folders-container">
+    <div class="mc-additional-features">
+      <div>
+        <svg-icon icon-class="garbage" />
+        <span>Tags</span>
+      </div>
+      <div>
+        <svg-icon icon-class="garbage" />
+        <span>Shared with Me</span>
+      </div>
+      <div>
+        <svg-icon icon-class="garbage" />
+        <span>All Notes</span>
+      </div>
+    </div>
+
     <div class="mc-folders-header">
       <span>Folders</span>
     </div>
@@ -43,7 +58,7 @@ export default {
 
   methods: {
     selectFolder(id) {
-      this.$db.setFolderById(id)
+      this.$db.setFolderById(id);
     },
 
     logout() {

@@ -1,27 +1,47 @@
 const functions = require("firebase-functions");
 const algoliasearch = require("algoliasearch");
 
+const ALGOLIA_INDEX = "notes";
 const client = algoliasearch("YourApplicationID", "YourAdminAPIKey");
-const index = client.initIndex("your_index_name");
+// const index = client.initIndex("your_index_name");
 
-// listen for a delete of a piece of equipment in Firestore
-exports.removeFolderFromAlgolia = functions.firestore
-  .document("folders/{id}")
-  .onCreate(snap => {
-    const objectID = snap.params.document;
+/**
+ * Algolia automatically indexes our data to use for full-text search
+ * listen for a delete of a piece of equipment in Firestore
+ *
+ * onCreate
+ */
+exports.onNoteCreate = functions.firestore
+  .document("notes/{id}")
+  .onCreate(async (snap, ctx) => {
+    const folder = snap.data();
+    folder.objectID = ctx.params.noteId;
 
-    // return removeFromAlgolia(objectID, "equipment")
-    //   .then(res => console.log("SUCCESS ALGOLIA equipment ADD", res))
-    //   .catch(err => console.log("ERROR ALGOLIA equipment ADD", err));
+    const index = client.initIndex(ALGOLIA_INDEX);
+    return index.saveObject(folder);
   });
 
-// listen for a delete of a piece of equipment in Firestore
-exports.removeNoteFromAlgolia = functions.firestore
+/**
+ * onUpdate
+ */
+exports.onNoteUpdate = functions.firestore
   .document("notes/{id}")
-  .onCreate(snap => {
-    const objectID = snap.params.document;
+  .onUpdate(async (snap, ctx) => {
+    const noteUpdated = snap.after.data();
+    noteUpdated.objectID = ctx.params.noteId;
 
-    // return removeFromAlgolia(objectID, "equipment")
-    //   .then(res => console.log("SUCCESS ALGOLIA equipment ADD", res))
-    //   .catch(err => console.log("ERROR ALGOLIA equipment ADD", err));
+    const index = client.initIndex(ALGOLIA_INDEX);
+    await index.partialUpdateObject(noteUpdated);
+  });
+
+/**
+ * onDelete
+ */
+exports.onNoteRemove = functions.firestore
+  .document("notes/{id}")
+  .onDelete(async (snap, ctx) => {
+    const objectID = snap.params.noteId;
+
+    const index = client.initIndex(ALGOLIA_INDEX);
+    return index.deleteObject(objectID); // note.id
   });
